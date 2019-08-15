@@ -10,13 +10,14 @@ public class TapImageEvent extends Event<TapImageEvent> {
     private final int targetTag;
     private WritableMap event;
 
-    TapImageEvent(int targetTag, String uri, Integer width, Integer height) {
+    TapImageEvent(int targetTag, String uri, Integer width, Integer height, String filename) {
         this.targetTag = targetTag;
         event = Arguments.createMap();
         event.putString("selected", uri);
         event.putString("id", "onTapImage");
         event.putInt("width", width);
         event.putInt("height", height);
+        event.putString("filename", filename);
         init(0);
     }
 

@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.uimanager.UIManagerModule;
 
+import java.io.File;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -58,14 +60,16 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.AbsViewH
         Integer width;
         Integer height;
         Integer orientation;
+        String filename;
 
-        public Image(String uri, Integer id, String mimeType, Integer width, Integer height,Integer orientation) {
+        public Image(String uri, Integer id, String mimeType, Integer width, Integer height,Integer orientation, String filename) {
             this.uri = uri;
             this.id = id;
             this.mimeType = mimeType;
             this.width = width;
             this.height = height;
             this.orientation = orientation;
+            this.filename = filename;
         }
     }
 
@@ -111,7 +115,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.AbsViewH
                 return;
             }
 
-            onTapImage(image.uri, image.width, image.height);
+            onTapImage(image.uri, image.width, image.height, image.filename);
             // optimistically update the selection state for responsiveness -
             // ultimately the selection state will be reset based on the
             // imagesSelected prop which should be updated based on the
@@ -319,13 +323,15 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.AbsViewH
             int heightIndex = cursor.getColumnIndex(MediaStore.Images.Media.HEIGHT);
             int orientationIndex = cursor.getColumnIndex(MediaStore.Images.Media.ORIENTATION);
             do {
-                images.add(new Image(cursor.getString(dataIndex), cursor.getInt(idIndex), cursor.getString(mimeIndex),
-                        cursor.getInt(widthIndex), cursor.getInt(heightIndex), cursor.getInt(orientationIndex)));
+                String uri = cursor.getString(dataIndex);
+                File file = new File(uri);
+                images.add(new Image(uri, cursor.getInt(idIndex), cursor.getString(mimeIndex),
+                        cursor.getInt(widthIndex), cursor.getInt(heightIndex), cursor.getInt(orientationIndex), file.getName()));
             } while (cursor.moveToNext());
         }
 
         if (shouldShowCustomButton()) {
-            images.add(new Image(null, -1, "", 0, 0,0));
+            images.add(new Image(null, -1, "", 0, 0,0, ""));
         }
         Collections.reverse(images);
         int index = 0;
@@ -442,8 +448,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.AbsViewH
         return customButtonImage != null;
     }
 
-    public void onTapImage(String uri, Integer width, Integer height) {
-        reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher().dispatchEvent(new TapImageEvent(getRootViewId(), uri, width, height));
+    public void onTapImage(String uri, Integer width, Integer height, String filename) {
+        reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher().dispatchEvent(new TapImageEvent(getRootViewId(), uri, width, height, filename));
     }
 
     public void onTapCustomButton() {

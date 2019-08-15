@@ -211,3 +211,7 @@ buck-out/
 \.buckd/
 android/app/libs
 android/keystores/debug.keystore
+
+.project
+.settings
+Session.vim
