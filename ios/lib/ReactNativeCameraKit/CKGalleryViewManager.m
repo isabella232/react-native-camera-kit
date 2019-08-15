@@ -643,9 +643,15 @@ static NSString * const CustomCellReuseIdentifier = @"CustomCell";
 
 -(void)onSelectChanged:(PHAsset*)asset isSelected:(BOOL)isSelected{
     if (self.onTapImage) {
-        
+        // Get underlying resources of an asset - this includes files as well as details about edited PHAssets
+        NSArray<PHAssetResource *> *const assetResources = [PHAssetResource assetResourcesForAsset:asset];
+        if (![assetResources firstObject]) {
+            self.onTapImage(@{@"Error": @"Could not get image filename"});
+        }
+        PHAssetResource *const _Nonnull resource = [assetResources firstObject];
         NSMutableDictionary *imageTapInfo = [@{@"width": [NSNumber numberWithUnsignedInteger:asset.pixelWidth],
-                                               @"height": [NSNumber numberWithUnsignedInteger:asset.pixelHeight]} mutableCopy];
+                                               @"height": [NSNumber numberWithUnsignedInteger:asset.pixelHeight],
+                                               @"filename": resource.originalFilename} mutableCopy];
         
         BOOL shouldReturnUrl = self.getUrlOnTapImage ? [self.getUrlOnTapImage boolValue] : NO;
         NSNumber *isSelectedNumber = [NSNumber numberWithBool:isSelected];
