@@ -643,7 +643,6 @@ static NSString * const CustomCellReuseIdentifier = @"CustomCell";
 
 -(void)onSelectChanged:(PHAsset*)asset isSelected:(BOOL)isSelected{
     if (self.onTapImage) {
-        // Get underlying resources of an asset - this includes files as well as details about edited PHAssets
         NSArray<PHAssetResource *> *const assetResources = [PHAssetResource assetResourcesForAsset:asset];
         if (![assetResources firstObject]) {
             self.onTapImage(@{@"Error": @"Could not get image filename"});
