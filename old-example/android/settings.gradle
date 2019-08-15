@@ -2,4 +2,4 @@ rootProject.name = 'example'
 
 include ':app'
 include ':rncamerakit'
-project(':rncamerakit').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-camera-kit/android/')
+project(':rncamerakit').projectDir = new File(rootProject.projectDir, '../node_modules/@synconset/react-native-camera-kit/android/')
