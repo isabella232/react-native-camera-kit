@@ -1,8 +1,8 @@
 {
-  "name": "react-native-camera-kit",
+  "name": "@synconset/react-native-camera-kit",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wix/react-native-camera-kit.git"
+    "url": "https://github.com/wymsee/react-native-camera-kit.git"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -12,7 +12,7 @@
   "author": "Ran Greenberg <rang@wix.com>",
   "nativePackage": true,
   "bugs": {
-    "url": "https://github.com/wix/react-native-camera-kit/issues"
+    "url": "https://github.com/wymsee/react-native-camera-kit/issues"
   },
   "scripts": {
     "start": "watchman watch-del-all && node node_modules/react-native/local-cli/cli.js start",
@@ -33,5 +33,5 @@
     "react-test-renderer": "16.0.0",
     "metro-react-native-babel-preset": "0.51.0"
   },
-  "homepage": "https://github.com/wix/react-native-camera-kit"
+  "homepage": "https://github.com/wymsee/react-native-camera-kit"
 }
