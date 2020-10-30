@@ -215,3 +215,4 @@ android/keystores/debug.keystore
 .project
 .settings
 Session.vim
+example/ios/Pods
